@@ -1,22 +1,29 @@
+/* */
 import express from 'express';
 import template from './template';
 import React from 'react';
-import ReactServer from 'react-dom/server';
-import {RouterContext} from 'react-router';
+import {renderToString} from 'react-dom/server';
+import {RouterContext, match} from 'react-router';
 
-import App from '../src/AppComponent';
+import routes from '../src/AppComponent';
 
 const app = express();
 
 app.use(express.static('public'));
 
-app.use('/', function(req, res) {
-  const html = ReactServer.renderToString(
-    <RouterContext path={req.path}>
-      <App />
-    </RouterContext>
-  );
-  res.send(template(html));
+app.use('/', function(req, res, next) {
+
+  console.log(req.url, req.path);
+
+  match({routes, location: req.url || req.path}, (err, redirectLocation, renderProps) => {
+    if (renderProps) {
+      const html = renderToString(<RouterContext {...renderProps} />);
+      res.send(template(html));
+    } else {
+      next();
+    }
+  })
+
 });
 
 app.listen(5000, function () {
@@ -24,7 +31,6 @@ app.listen(5000, function () {
 });
 
 app.get('/neural', function(req, res) {
-  const html = ReactServer.renderToString(<App />);
-
+  const html = '';
   res.send(template(html));
 });
