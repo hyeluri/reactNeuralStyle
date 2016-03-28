@@ -1,2 +1,10 @@
 # reactBoilerPlate
-react boiler plate 
+react boiler plate
+
+
+Remember to
+
+```
+brew update
+brew install flow
+```
