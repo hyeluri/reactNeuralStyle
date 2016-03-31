@@ -1,17 +1,15 @@
+/* @flow */
 import React, {Component} from 'react';
 import {Route, Link, route} from 'react-router';
 
-
-export default class UploadComponent extends Component {
+export default class UploadComponent extends Component<void, void, void> {
   render() {
     return (
-      <div>Upload Component</div>
+      <div>
+        <div>Upload Component</div>
+        <input type='file' accept='.png,.jpg' name='sourcePic'></input>
+        <img id='sourcePreview'/>
+      </div>
     );
   }
 }
-
-//
-// {/*<Route path="edit" >
-//   <Route path="/:id" >
-//   </Route>
-// </Route>*/}
